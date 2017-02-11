@@ -1,0 +1,77 @@
+tokumei-recaptcha
+=================
+
+reCAPTCHA apps for [Tokumei](https://tokumei.co/).
+
+`recaptcha`: common templating required for the other apps.
+
+`posts_recaptcha`: `posts` app modified to require solving a reCAPTCHA challenge
+before posting. Requires `recaptcha` and `indices_recaptcha`.
+
+`replies_recaptcha`: `replies` app modified to require solving a reCAPTCHA
+challenge before posting. Requires `recaptcha`.
+
+`indices_recaptcha`: `indices` app modified to use `posts_recaptcha` instead of
+`posts`. Requires `recaptcha` and `posts_recaptcha`.
+
+INSTALLATION
+------------
+
+1. Put the directories for the apps you want under tokumei/apps/. If you used
+   the Tokumei installer, this is /var/www/YOUR-DOMAIN.TLD/apps/.
+
+    mv recaptcha posts_recaptcha replies_recaptcha indices_recaptcha /path/to/tokumei/apps/
+
+2. Generate a reCAPTCHA API key. Note that you need to set the security
+   preference to "easiest for users" if you want your Tokumei site to work
+   without JavaScript (recommended). Google should give you a site key and a
+   secret which you'll use to configure tokumei-recaptcha.
+
+    http://www.google.com/recaptcha/admin
+
+3. Configure reCAPTCHA in tokumei/sites/tokumei.co/_werc/config. Remove the apps
+   you are replacing (probably posts, replies, and indices), enable the new apps
+   you want, and set `recaptchasitekey` and `recaptchasecret` using the site key
+   and secret you got in step 2.
+
+    -conf_enable_indices
+    -conf_enable_posts
+    -conf_enable_replies
+    +conf_enable_indices_recaptcha
+    +conf_enable_posts_recaptcha
+    +conf_enable_replies_recaptcha
+    +conf_enable_recaptcha
+
+    +recaptchasitekey=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+    +recaptchasecret=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+4. Clear Tokumei's template cache.
+
+    rm -r /tmp/fltr_cache
+
+LICENSE
+-------
+
+Distributed under the ISC license, reproduced below.
+
+Copyright (c) 2017, Kyle Farwell
+
+Permission to use, copy, modify, and/or distribute this software for any purpose
+with or without fee is hereby granted, provided that the above copyright notice
+and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND
+FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS
+OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER
+TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF
+THIS SOFTWARE.
+
+CONTACT
+-------
+
+mailto:hello@tokumei.co
+
+https://kfarwell.org/contact
+https://krourke.org/contact

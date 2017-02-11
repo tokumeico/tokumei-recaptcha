@@ -1,0 +1,7 @@
+fn conf_enable_recaptcha {
+    conf_enable_app recaptcha
+}
+
+fn recaptcha_init {
+    ll_add handlers_body_head tpl_handler `{get_lib_file recaptcha/recaptcha.tpl apps/recaptcha/recaptcha.tpl}
+}

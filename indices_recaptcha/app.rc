@@ -1,0 +1,12 @@
+fn conf_enable_indices_recaptcha {
+    conf_enable_app indices_recaptcha
+}
+
+fn indices_recaptcha_init {
+    if(~ $req_path /p/timeline || ~ $req_path /p/)
+        handler_body_main=(tpl_handler `{get_lib_file indices_recaptcha/timeline.tpl apps/indices_recaptcha/timeline.tpl})
+    if not if(~ $req_path /p/trending)
+        handler_body_main=(tpl_handler `{get_lib_file indices_recaptcha/trending.tpl apps/indices_recaptcha/trending.tpl})
+    if not if(~ $req_path /p/following)
+        handler_body_main=(tpl_handler `{get_lib_file indices_recaptcha/following.tpl apps/indices_recaptcha/following.tpl})
+}
